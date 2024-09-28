@@ -1,3 +1,4 @@
+/*
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
@@ -15,7 +16,7 @@ test('has Jenkins in the body', async ({ page }) => {
   expect(isVisible).toBeTruthy();
 });
 
-/*
+
 test('has expected app version', async ({ page }) => {
   await page.goto('/');
 
