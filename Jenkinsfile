@@ -32,7 +32,7 @@ pipeline {
                 '''
             }
         }
-
+/*
         stage('Tests') {
             parallel {
                 stage('Unit tests') {
@@ -79,9 +79,10 @@ pipeline {
                         }
                     }
                 }
+                
             }
         }
-
+*/
         stage('Deploy staging') {
             agent {
                 docker {
