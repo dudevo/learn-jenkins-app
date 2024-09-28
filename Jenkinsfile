@@ -34,6 +34,7 @@ pipeline {
                 '''
             }
         }
+        /*
         stage('E2E') {
             agent {
                 docker {
@@ -42,7 +43,7 @@ pipeline {
 
                 }
             }
-            /*
+            
             steps {
                 sh '''
                     npm install serve
