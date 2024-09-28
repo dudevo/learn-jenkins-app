@@ -99,6 +99,10 @@ pipeline {
 
                 }
             }
+
+             environment {
+                CI_ENVIRONMENT_URL = 'https://storied-biscotti-f3e564.netlify.app'
+            }
             
             steps {
                 sh '''
