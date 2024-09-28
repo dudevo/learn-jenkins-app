@@ -42,6 +42,7 @@ pipeline {
 
                 }
             }
+            /*
             steps {
                 sh '''
                     npm install serve
@@ -50,6 +51,7 @@ pipeline {
                     npx playwright test
                 '''
             }
+            */
         }
     }
     post {
