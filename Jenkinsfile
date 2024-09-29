@@ -15,6 +15,20 @@ pipeline {
             }
         }
 */
+        stage('AWS'){
+            agent {
+                docker {
+                    image 'amazon/aws-cli'
+
+                }
+            }
+            steps {
+                sh '''
+                aws --version
+
+                '''
+            }
+        }
         stage('Build') {
             agent {
                 docker {
@@ -123,7 +137,7 @@ pipeline {
             }
 
             environment {
-                CI_ENVIRONMENT_URL = 'YOUR NETLIFY URL'
+                CI_ENVIRONMENT_URL = 'https://storied-biscotti-f3e564.netlify.app'
             }
 
             steps {
