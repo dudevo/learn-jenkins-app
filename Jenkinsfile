@@ -41,7 +41,7 @@ stages {
                 '''
             }
         }
-/*
+
         stage('Tests') {
             parallel {
                 stage('Unit tests') {
@@ -89,7 +89,7 @@ stages {
                 }
             }
         }
-*/
+
         stage('Deploy staging') {
             agent {
                 docker {
@@ -109,7 +109,7 @@ stages {
                     netlify status
                     netlify deploy --dir=build --json > deploy-output.json
                     CI_ENVIRONMENT_URL=$(jq -r '.deploy_url' deploy-output.json)
-                    #npx playwright test  --reporter=html
+                    npx playwright test  --reporter=html
                 '''
             }
 
@@ -129,7 +129,7 @@ stages {
             }
 
             environment {
-                CI_ENVIRONMENT_URL = 'https://storied-biscotti-f3e564.netlify.app'
+                CI_ENVIRONMENT_URL = 'YOUR NETLIFY SITE URL'
             }
 
             steps {
@@ -139,7 +139,7 @@ stages {
                     echo "Deploying to production. Site ID: $NETLIFY_SITE_ID"
                     netlify status
                     netlify deploy --dir=build --prod
-                    #npx playwright test  --reporter=html
+                    npx playwright test  --reporter=html
                 '''
             }
 
@@ -151,3 +151,4 @@ stages {
         }
     }
 }
+
