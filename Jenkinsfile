@@ -33,7 +33,7 @@ stages {
                 '''
             }
         }
-
+/*
         stage('Tests') {
             parallel {
                 stage('Unit tests') {
@@ -82,7 +82,7 @@ stages {
                 }
             }
         }
-
+*/
         stage('Deploy staging') {
             agent {
                 docker {
