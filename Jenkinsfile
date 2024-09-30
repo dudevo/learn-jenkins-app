@@ -8,7 +8,7 @@ pipeline {
         AWS_DEFAULT_REGION = "eu-central-1"
         AWS_ECS_CLUSTER = 'jenkins-test-2'
         AWS_ECS_SERVICE_PROD = 'test-jenkins-service'
-        AWS_ECS_TD_PROD = 'LearnJenkinsApp-TaskDefinition-Prod'
+        AWS_ECS_TD_PROD = 'Test-Jenkins'
     }
 
 stages {
