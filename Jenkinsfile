@@ -2,15 +2,43 @@ pipeline {
     agent any
 
     environment {
-        NETLIFY_SITE_ID = '08033dde-05e1-4238-aa87-ebc287368c81'
-        NETLIFY_AUTH_TOKEN = credentials('netlify-token')
+        // NETLIFY_SITE_ID = '08033dde-05e1-4238-aa87-ebc287368c81'
+        // NETLIFY_AUTH_TOKEN = credentials('netlify-token')
         REACT_APP_VERSION = "1.0.$BUILD_ID"
+        AWS_DEFAULT_REGION = "eu-central-1"
     }
 
 stages {
         stage('Docker') {
             steps {
                 sh 'docker build -t my-playwright .'
+            }
+        }
+
+        
+
+        stage('AWS') {
+            agent {
+                docker {
+                    image 'amazon/aws-cli'
+                    reuseNode true
+                    args "--entrypoint=''"
+                }
+            }
+            /*
+            environment {
+                AWS_S3_BUCKET = 'learn-jenkins-202419281940'
+            }
+            */
+
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                sh '''
+                    aws --version
+                    #aws s3 sync build s3://$AWS_S3_BUCKET
+                    aws ecs register-task-definition --cli-input-json file://aws/task-definition.json
+                '''
+                }
             }
         }
 
@@ -30,27 +58,6 @@ stages {
                     npm run build
                     ls -la
                 '''
-            }
-        }
-
-        stage('AWS') {
-            agent {
-                docker {
-                    image 'amazon/aws-cli'
-                    reuseNode true
-                    args "--entrypoint=''"
-                }
-            }
-            environment {
-                AWS_S3_BUCKET = 'learn-jenkins-202419281940'
-            }
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-                sh '''
-                    aws --version
-                    aws s3 sync build s3://$AWS_S3_BUCKET
-                '''
-                }
             }
         }
 /*
@@ -102,7 +109,7 @@ stages {
                 }
             }
         }
-*/
+
         stage('Deploy staging') {
             agent {
                 docker {
@@ -163,6 +170,6 @@ stages {
             }
         }
     }
-}
+*/}
 
 
